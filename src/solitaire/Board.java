@@ -1,6 +1,7 @@
 package solitaire;
 
 public interface Board {
+
   boolean hasValidMove();
 
   Slot[][] getBoard();
@@ -12,4 +13,6 @@ public interface Board {
   void placeMarble(int row, int col);
 
   int getMarbleCount();
+
+  boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol);
 }

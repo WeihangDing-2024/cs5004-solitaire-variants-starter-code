@@ -1,24 +1,22 @@
 package solitaire;
 
-public class CrossBoard extends AbstractBoard implements Board{
+public class DiamondBoard extends AbstractBoard implements Board {
 
-  public CrossBoard() {
-    MAXSIZE = 7;
+  public DiamondBoard() {
+    MAXSIZE = 9;
     board = new Slot[MAXSIZE][MAXSIZE];
+
     for (int i = 0; i < MAXSIZE; i++) {
       for (int j = 0; j < MAXSIZE; j++) {
-        if ((i < 2 || (6-i) < 2) && (j < 2 || (6-j) < 2)) {
+        if (i + j < 4 || i + j > 12 || Math.abs(i - j) > 4) {
           board[i][j] = Slot.FORBIDDEN;
-          continue;
+        } else {
+          board[i][j] = Slot.MARBLE;
         }
-        if (i == 3 && j == 3) {
-          board[i][j] = Slot.EMPTY;
-          continue;
-        }
-        board[i][j] = Slot.MARBLE;
       }
     }
-    marbleCount = 32;
+    board[4][4] = Slot.EMPTY;
+    marbleCount = 40;
   }
 
   protected boolean isNotRelativePosition(int fromRow, int fromCol, int toRow, int toCol) {
@@ -29,11 +27,10 @@ public class CrossBoard extends AbstractBoard implements Board{
 
     if (fromRow == toRow && Math.abs(fromCol - toCol) == 2) {
       return false;
-    }
-    if (fromCol == toCol && Math.abs(fromRow - toRow) == 2) {
+    } else if (fromCol == toCol && Math.abs(fromRow - toRow) == 2) {
       return false;
+    } else {
+      return Math.abs(fromCol - toCol) != 2 || Math.abs(fromRow - toRow) != 2;
     }
-    return true;
   }
-
 }
